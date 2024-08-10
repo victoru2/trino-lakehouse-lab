@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingestion-airbyte
+  namespace: gitops
+spec:
+  project: default
+  destination:
+    name: 'gke_trino-lakehouse_us-east1_trino-lakehouse-gke'
+    namespace: ingestion
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+  sources:
+  - repoURL: 'https://github.com/victoru2/trino-lakehouse-lab.git'
+    targetRevision: main
+    ref: trino-lakehouse-lab
+  - repoURL: https://airbytehq.github.io/helm-charts
+    chart: airbyte
+    targetRevision: 0.399.0
+    helm:
+      valueFiles:
+      - $trino-lakehouse-lab/airbyte/helm/values.yaml
