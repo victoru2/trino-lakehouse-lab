@@ -1,0 +1,38 @@
+# Terraform files
+*.tfstate
+*.tfstate.backup
+.terraform*
+
+# Local environment files
+.env
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Node.js dependencies
+node_modules/
+
+# Python dependencies
+__pycache__/
+*.py[cod]
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Credentials
+gcp-credentials.json
+
+# Ignore your terraform configuration if you plan on using a different configuration for different environments
+terraform.tfvars
+.github/
+
+# Ignore git repo token
+git-repo*
+# git-credentials-secret*
