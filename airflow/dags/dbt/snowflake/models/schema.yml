@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+- name: staging
+  database: persistent_data
+  schema: staging
+  tables:
+  - name: table_1
+  - name: table_2
+  - name: table_3
