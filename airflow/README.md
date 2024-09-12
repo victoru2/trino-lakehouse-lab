@@ -1,5 +1,5 @@
 # Airflow Service
-In this folder, we have the configuration to install Airflow 2.9.3, DBT core, and Astronomer Cosmos to run our DBT model.
+In this folder, we have the configuration to install Airflow 2.10.1, DBT core, and Astronomer Cosmos to run our DBT model.
 - **argocd-app-manifest**: Contains the application to synchronize Airflow with ArgoCD.
 - **dags**: Contains the DAGs and the DBT project.
 - **helm**: Contains the configuration to install Airflow.
