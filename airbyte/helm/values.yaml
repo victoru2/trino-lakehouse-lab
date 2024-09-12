@@ -6,99 +6,117 @@ global:
         cpu: 250m
       limits:
         memory: 2Gi
-        cpu: 3000m
+        cpu: 2500m
+
+workload-launcher:
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 50m
+    limits:
+      memory: 2Gi
+      cpu: 300m
 
 webapp:
   replicaCount: 1
   resources:
     requests:
-      memory: 128Mi
-      cpu: 100m
+      memory: 10Mi
+      cpu: 10m
     limits:
-      memory: 1Gi
-      cpu: 500m
+      memory: 50Mi
+      cpu: 50m
 
 pod-sweeper:
   resources:
     requests:
-      memory: 128Mi
-      cpu: 50m
+      memory: 50Mi
+      cpu: 10m
     limits:
-      memory: 256Mi
-      cpu: 200m
+      memory: 100Mi
+      cpu: 50m
 
 server:
   replicaCount: 1
   resources:
     requests:
-      memory: 500Mi
-      cpu: 500m
+      memory: 5Gi
+      cpu: 300m
     limits:
-      memory: 4Gi
-      cpu: 2000m
+      memory: 10Gi
+      cpu: 600m
 
 worker:
   replicaCount: 1
   resources:
     requests:
-      memory: 1Gi
-      cpu: 500m
+      memory: 2Gi
+      cpu: 15m
     limits:
       memory: 4Gi
-      cpu: 2000m
+      cpu: 200m
 
 airbyte-bootloader:
   resources:
     requests:
       memory: 256Mi
-      cpu: 200m
+      cpu: 50m
     limits:
-      memory: 1Gi
-      cpu: 500m
+      memory: 500Mi
+      cpu: 250m
 
 temporal:
   replicaCount: 1
   resources:
     requests:
       memory: 256Mi
-      cpu: 250m
+      cpu: 30m
     limits:
       memory: 2Gi
-      cpu: 1000m
+      cpu: 250m
 
 postgresql:
   enabled: true
 
 minio:
   storage:
-    volumeClaimValue: 1Gi
+    volumeClaimValue: 5Gi
 
 cron:
   replicaCount: 1
   resources:
     requests:
-      memory: 128Mi
-      cpu: 100m
+      memory: 350Mi
+      cpu: 10m
     limits:
-      memory: 512Mi
-      cpu: 250m
+      memory: 700Mi
+      cpu: 100m
 
 connector-builder-server:
   replicaCount: 1
   resources:
     requests:
       memory: 256Mi
-      cpu: 200m
+      cpu: 500m
     limits:
       memory: 1Gi
-      cpu: 500m
+      cpu: 300m
 
 airbyte-api-server:
   replicaCount: 1
   resources:
     requests:
-      memory: 500Mi
-      cpu: 250m
+      memory: 256Mi
+      cpu: 15m
     limits:
-      memory: 2Gi
-      cpu: 1000m
+      memory: 1Gi
+      cpu: 100m
+
+workload-api-server:
+  resources:
+    requests:
+      memory: 400Mi
+      cpu: 15m
+    limits:
+      memory: 1Gi
+      cpu: 200m

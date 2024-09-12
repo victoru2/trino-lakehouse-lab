@@ -10,15 +10,15 @@ helm repo update
 
 ### 2. Obtain the [values.yaml](https://github.com/airbytehq/airbyte-platform/blob/main/charts/airbyte/values.yaml) File
 ```sh
-helm pull airbyte/airbyte --untar -d ./airbyte/airbyte-repo --version 0.293.4
+helm pull airbyte/airbyte --untar -d ./airbyte/airbyte-repo --version 0.551.0
 mkdir ./airbyte/helm
 cp ./airbyte/airbyte-repo/airbyte/values.yaml ./airbyte/helm/values.yaml
 rm -rf ./airbyte/airbyte-repo
 ```
 
-### 3. Install Postgres and Airbyte Service
+### 3. Install the Airbyte Service
 ```sh
-helm install -f ./airbyte/helm/values.yaml ingestion-airbyte airbyte/airbyte --namespace ingestion --version 0.293.4
+helm install -f ./airbyte/helm/values.yaml ingestion-airbyte airbyte/airbyte --namespace ingestion --version 0.551.0
 ```
 
 ### Extra. Update the airbyte-db PVC
