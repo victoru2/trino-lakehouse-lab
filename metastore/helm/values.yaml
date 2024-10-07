@@ -1,0 +1,248 @@
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  defaultStorageClass: ""
+  storageClass: ""
+  compatibility:
+    openshift:
+      adaptSecurityContext: auto
+
+clusterDomain: cluster.local
+
+image:
+  registry: docker.io
+  repository: bitnami/nessie
+  tag: 0.99.0-debian-12-r2
+  digest: ""
+
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+  debug: false
+
+replicaCount: 1
+
+containerPorts:
+  http: 19120
+  management: 9000
+
+e
+logLevel: INFO
+
+usePasswordFile: true
+
+versionStoreType: JDBC_POSTGRESQL
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
+
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 90
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
+
+
+resourcesPreset: "medium"
+
+resources: {}
+
+podSecurityContext:
+  enabled: true
+  fsGroupChangePolicy: Always
+  sysctls: []
+  supplementalGroups: []
+  fsGroup: 1001
+
+containerSecurityContext:
+  enabled: true
+  seLinuxOptions: null
+  runAsUser: 1001
+  runAsGroup: 1001
+  runAsNonRoot: true
+  privileged: false
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+  seccompProfile:
+    type: "RuntimeDefault"
+
+
+podAntiAffinityPreset: soft
+
+pdb:
+  create: true
+  minAvailable: ""
+  maxUnavailable: ""
+
+automountServiceAccountToken: false
+updateStrategy:
+  type: RollingUpdate
+
+autoscaling:
+  vpa:
+    enabled: false
+    annotations: {}
+    controlledResources: []
+    maxAllowed: {}
+    minAllowed: {}
+    updatePolicy:
+      updateMode: Auto
+  hpa:
+    enabled: false
+    minReplicas: ""
+    maxReplicas: ""
+    targetCPU: ""
+    targetMemory: ""
+service:
+  server:
+    type: LoadBalancer
+    ports:
+      http: 19120
+    nodePorts:
+      http: ""
+    clusterIP: ""
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    externalTrafficPolicy: Cluster
+    annotations: {}
+    extraPorts: []
+    sessionAffinity: None
+    sessionAffinityConfig: {}
+  management:
+    type: ClusterIP
+    ports:
+      http: 9000
+    nodePorts:
+      http: ""
+    clusterIP: ""
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    externalTrafficPolicy: Cluster
+    annotations: {}
+    extraPorts: []
+    sessionAffinity: None
+    sessionAffinityConfig: {}
+
+ingress:
+  enabled: false
+  selfSigned: false
+  pathType: ImplementationSpecific
+  apiVersion: ""
+  hostname: nessie.local
+
+  path: /
+
+  tls: false
+
+  tlsWwwPrefix: false
+persistence:
+  enabled: true
+  mountPath: /bitnami/nessie/data
+  subPath: ""
+
+  storageClass: ""
+
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+  existingClaim: ""
+
+volumePermissions:
+  enabled: false
+  image:
+    registry: docker.io
+    repository: bitnami/os-shell
+    tag: 12-debian-12-r30
+    pullPolicy: IfNotPresent
+  resourcesPreset: "nano"
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 0
+
+waitContainer:
+  image:
+    registry: docker.io
+    repository: bitnami/postgresql
+    tag: 16.4.0-debian-12-r13
+    digest: ""
+    pullPolicy: IfNotPresent
+    debug: false
+  resourcesPreset: "nano"
+  containerSecurityContext:
+    enabled: true
+    seLinuxOptions: null
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: ["ALL"]
+    seccompProfile:
+      type: "RuntimeDefault"
+
+serviceAccount:
+  create: true
+  name: ""
+  automountServiceAccountToken: false
+
+networkPolicy:
+  enabled: true
+  allowExternal: true
+  allowExternalEgress: true
+
+metrics:
+  enabled: false
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "19120"
+    prometheus.io/path: "/metrics"
+
+  serviceMonitor:
+    enabled: false
+    interval: "10s"
+    scrapeTimeout: "5s"
+    labels:
+      release: prometheus
+    namespace: observability-infra
+    selector:
+      matchLabels:
+        app: nessie
+
+postgresql:
+  enabled: true
+  auth:
+    username: bn_nessie
+    password: ""
+    database: bitnami_nessie
+    existingSecret: ""
+  architecture: standalone
+  primary:
+    service:
+      ports:
+        postgresql: 5432
+externalDatabase:
+  host: ""
+  port: 5432
+  user: postgres
+  database: nessie
+  password: ""
+  existingSecret: ""
+  existingSecretPasswordKey: "db-password"
