@@ -1,0 +1,105 @@
+image:
+  repository: trinodb/trino
+  tag: 460
+  pullPolicy: IfNotPresent
+
+server:
+  workers: 3
+  node:
+    environment: production
+    dataDir: /data/trino
+    pluginDir: /usr/lib/trino/plugin
+  log:
+    trino:
+      level: INFO
+  config:
+    path: /etc/trino
+    https:
+      enabled: false
+      port: 8443
+      keystore:
+        path: ""
+    authenticationType: ""
+    query:
+      maxMemory: "4GB"
+  exchangeManager: {}
+
+  workerExtraConfig: ""
+  coordinatorExtraConfig: ""
+  autoscaling:
+    enabled: false
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 80
+    behavior: {}
+
+
+catalogs:
+  tpch: |
+    connector.name=tpch
+    tpch.splits-per-node=4
+  tpcds: |
+    connector.name=tpcds
+    tpcds.splits-per-node=4
+
+additionalCatalogs: {}
+
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+shareProcessNamespace:
+  coordinator: false
+  worker: false
+
+service:
+  annotations: {}
+  type: ClusterIP
+  port: 8080
+  nodePort: ""
+
+coordinator:
+  jvm:
+    maxHeapSize: "8G"
+    gcMethod:
+      type: "UseG1GC"
+      g1:
+        heapRegionSize: "32M"
+
+  config:
+    memory:
+      heapHeadroomPerNode: ""
+    query:
+      maxMemoryPerNode: "1GB"
+
+  terminationGracePeriodSeconds: 30
+
+worker:
+  jvm:
+    maxHeapSize: "8G"
+    gcMethod:
+      type: "UseG1GC"
+      g1:
+        heapRegionSize: "32M"
+
+  config:
+    memory:
+      heapHeadroomPerNode: ""
+    query:
+      maxMemoryPerNode: "1GB"
+
+  gracefulShutdown:
+    enabled: false
+    gracePeriodSeconds: 120
+
+  terminationGracePeriodSeconds: 30
+
+kafka:
+  mountPath: "/etc/trino/schemas"
