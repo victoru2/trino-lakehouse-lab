@@ -6,15 +6,10 @@ sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/rele
 sudo chmod +x /usr/local/bin/argocd
 ```
 
-### repo
-```sh
-helm repo add argo https://argoproj.github.io/argo-helm
-```
-
 ### build
 ```sh
 terraform init
-terraform apply
+terraform apply -auto-approve
 ```
 
 ### configure [manual]
@@ -25,7 +20,7 @@ kubectl -n gitops get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 
 argocd login 0.0.0.0 --username admin --password "password" --insecure
-argocd cluster add gke_trino-lakehouse_us-east1_trino-lakehouse-gke
+argocd cluster add my-cluster-name
 
 kubectl apply -f git-repo.yaml -n gitops
 ```
