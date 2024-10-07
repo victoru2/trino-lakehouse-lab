@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   destination:
-    name: 'gke_trino-lakehouse_us-east1_trino-lakehouse-gke'
+    name: 'victor-lab'
     namespace: ingestion
   syncPolicy:
     automated:
@@ -20,7 +20,7 @@ spec:
     ref: trino-lakehouse-lab
   - repoURL: https://airbytehq.github.io/helm-charts
     chart: airbyte
-    targetRevision: 0.399.0
+    targetRevision: 1.1.0
     helm:
       valueFiles:
       - $trino-lakehouse-lab/airbyte/helm/values.yaml

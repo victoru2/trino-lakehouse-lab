@@ -27,6 +27,11 @@ kubectl get pvc airbyte-pvc-name
 kubectl patch pvc airbyte-pvc-name -p '{"spec": {"resources": {"requests": {"storage": "2Gi"}}}}'
 ```
 
+### Deploying with ArgoCD
+```sh
+kubectl apply -f ./airbyte/argocd-app-manifest/app.yaml
+```
+
 # NOTES: Get the application URL by running these commands:
 ```sh
 export POD_NAME=$(kubectl get pods --namespace ingestion -l "app.kubernetes.io/name=webapp" -o jsonpath="{.items[0].metadata.name}")
