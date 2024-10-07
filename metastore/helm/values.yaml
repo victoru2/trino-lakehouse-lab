@@ -25,7 +25,6 @@ containerPorts:
   http: 19120
   management: 9000
 
-e
 logLevel: INFO
 
 usePasswordFile: true
@@ -56,7 +55,6 @@ startupProbe:
   successThreshold: 1
   failureThreshold: 5
 
-
 resourcesPreset: "medium"
 
 resources: {}
@@ -81,7 +79,6 @@ containerSecurityContext:
     drop: ["ALL"]
   seccompProfile:
     type: "RuntimeDefault"
-
 
 podAntiAffinityPreset: soft
 
