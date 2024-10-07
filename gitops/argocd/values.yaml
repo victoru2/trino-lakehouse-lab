@@ -1,6 +1,6 @@
 global:
   image:
-    tag: "v2.7.7"
+    tag: "v2.12.4"
 
 dex:
   enabled: false

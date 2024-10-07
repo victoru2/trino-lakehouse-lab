@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   destination:
-    name: 'gke_trino-lakehouse_us-east1_trino-lakehouse-gke'
+    name: 'victor-lab'
     namespace: orchestrator
   syncPolicy:
     automated:
