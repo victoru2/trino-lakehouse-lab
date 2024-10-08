@@ -1,16 +1,16 @@
 variable "project_id" {
   description = "Google Cloud Project Trino"
-  default     = "trino-lakehouse"
+  default     = "victor-lab"
 }
 
 variable "region" {
   description = "Google Cloud region"
-  default     = "us-east1"
+  default     = "us-central1"
 }
 
 variable "cluster_name" {
   description = "Name of the GKE cluster"
-  default     = "trino-lakehouse-gke"
+  default     = "victor-lab"
 }
 
 variable "node_pool_name" {

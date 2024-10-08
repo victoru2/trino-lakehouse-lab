@@ -14,13 +14,13 @@ terraform apply -auto-approve
 
 ### configure [manual]
 ```sh
-kubectl patch svc argocd-server -n gitops -p '{"spec": {"type": "LoadBalancer"}}'
 kubectl get svc argocd-server -n gitops
+kubectl patch svc argocd-server -n gitops -p '{"spec": {"type": "LoadBalancer"}}'
 kubectl -n gitops get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
 
 argocd login 0.0.0.0 --username admin --password "password" --insecure
-argocd cluster add my-cluster-name
+argocd cluster add my-cluster-name-original --name my-new-cluster-name
 
 kubectl apply -f git-repo.yaml -n gitops
 ```
