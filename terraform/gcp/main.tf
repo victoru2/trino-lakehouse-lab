@@ -20,7 +20,7 @@ resource "google_container_cluster" "gke_cluster" {
 
     autoscaling {
       min_node_count = var.initial_node_count
-      max_node_count = 5
+      max_node_count = var.max_node_count
     }
 
   }
