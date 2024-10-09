@@ -20,7 +20,7 @@ variable "node_pool_name" {
 
 variable "machine_type" {
   description = "Machine type for GKE nodes"
-  default     = "e2-standard-2"  # Adjust machine type as per your requirements
+  default     = "n2-highmem-2"  # Adjust machine type as per your requirements
 }
 
 variable "initial_node_count" {

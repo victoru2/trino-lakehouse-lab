@@ -6,6 +6,7 @@ provider "google" {
 resource "google_container_cluster" "gke_cluster" {
   name     = var.cluster_name
   location = var.region
+  deletion_protection = false
 
   node_pool {
     name       = var.node_pool_name
