@@ -1,169 +1,184 @@
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  defaultStorageClass: ""
+  storageClass: ""
+  compatibility:
+    openshift:
+      adaptSecurityContext: auto
+
+nameOverride: ""
+namespaceOverride: ""
+fullnameOverride: ""
+commonLabels: {}
+commonAnnotations: {}
+kubeVersion: ""
 clusterDomain: cluster.local
+extraDeploy: []
 
 image:
-  repository: quay.io/minio/minio
-  tag: RELEASE.2024-04-18T19-09-19Z
+  registry: docker.io
+  repository: bitnami/minio
+  tag: 2024.10.2-debian-12-r0
+  digest: ""
   pullPolicy: IfNotPresent
+  pullSecrets: []
+  debug: false
 
-mcImage:
-  repository: quay.io/minio/mc
-  tag: RELEASE.2024-04-18T16-45-29Z
-  pullPolicy: IfNotPresent
+clientImage:
+  registry: docker.io
+  repository: bitnami/minio-client
+  tag: 2024.10.2-debian-12-r0
+  digest: ""
 
-mode: distributed ## other supported values are "standalone"
+mode: standalone
 
-minioAPIPort: "9000"
+auth:
+  existingSecret: minio-secret
+  rootUserSecretKey: rootUser
+  rootPasswordSecretKey: rootPassword
+  forcePassword: false
+  useCredentialsFiles: false
+  useSecret: true
+  forceNewKeys: false
 
-minioConsolePort: "9001"
+defaultBuckets: "lakehouse-data, metastore, trino"
 
-deploymentUpdate:
-  type: RollingUpdate
-  maxUnavailable: 0
-  maxSurge: 100%
+disableWebUI: false
+extraEnvVars: []
+extraEnvVarsCM: ""
+extraEnvVarsSecret: ""
+command: []
+args: []
+schedulerName: ""
+terminationGracePeriodSeconds: ""
 
-statefulSetUpdate:
-  updateStrategy: RollingUpdate
+deployment:
+  updateStrategy:
+    type: Recreate
 
+statefulset:
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: Parallel
+  replicaCount: 2
+  zones: 1
+  drivesPerNode: 1
+
+
+automountServiceAccountToken: false
+hostAliases: []
+
+containerPorts:
+  api: 9000
+  console: 9001
+
+podSecurityContext:
+  enabled: true
+  sysctls: []
+  supplementalGroups: []
+  fsGroup: 1001
+  fsGroupChangePolicy: "OnRootMismatch"
+
+containerSecurityContext:
+  enabled: true
+  seLinuxOptions: {}
+  runAsUser: 1001
+  runAsGroup: 1001
+  runAsNonRoot: true
+  privileged: false
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+  seccompProfile:
+    type: "RuntimeDefault"
+
+podLabels: {}
+podAnnotations: {}
+podAffinityPreset: ""
+podAntiAffinityPreset: soft
+
+nodeAffinityPreset:
+  type: ""
+  key: ""
+  values: []
+
+affinity: {}
+nodeSelector: {}
+tolerations: []
+topologySpreadConstraints: []
 priorityClassName: ""
-
 runtimeClassName: ""
+resourcesPreset: "micro"
+resources: {}
 
-rootUser: ""
-rootPassword: ""
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 5
 
-existingSecret: ""
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 1
+  successThreshold: 1
+  failureThreshold: 5
 
-certsPath: "/etc/minio/certs/"
-configPathmc: "/etc/minio/mc/"
+customLivenessProbe: {}
+customReadinessProbe: {}
+customStartupProbe: {}
+lifecycleHooks: {}
+extraVolumes: []
+extraVolumeMounts: []
+initContainers: []
+sidecars: []
 
-mountPath: "/export"
-bucketRoot: ""
-
-drivesPerNode: 1
-replicas: 2
-pools: 1
-
-trustedCertsSecret: ""
+service:
+  type: LoadBalancer
+  ports:
+    api: 9000
+    console: 9001
+  nodePorts:
+    api: ""
+    console: ""
+  clusterIP: ""
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+  externalTrafficPolicy: Cluster
+  extraPorts: []
+  headless:
+  
+networkPolicy:
+  enabled: true
+  allowExternal: true
+  allowExternalEgress: true
+  extraIngress: []
+  extraEgress: []
+  ingressNSMatchLabels: {}
+  ingressNSPodMatchLabels: {}
 
 persistence:
   enabled: true
-
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  storageClass: standard
+  mountPath: /bitnami/minio/data
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
   existingClaim: ""
-
-  storageClass: ""
-  volumeName: ""
-  accessMode: ReadWriteOnce
-  size: 20Gi
-
-  subPath: ""
-
-service:
-  type: ClusterIP
-  clusterIP: ~
-  port: "9000"
-  nodePort: 32000
-  loadBalancerIP: ~
-
-  externalTrafficPolicy: Cluster
-
-consoleService:
-  type: ClusterIP
-  clusterIP: ~
-  port: "9001"
-  nodePort: 32001
-  loadBalancerIP: ~
-
-  externalTrafficPolicy: Cluster
-
-securityContext:
-  enabled: true
-  runAsUser: 1000
-  runAsGroup: 1000
-  fsGroup: 1000
-  fsGroupChangePolicy: "OnRootMismatch"
-  readOnlyRootFilesystem: false
-
-resources:
-  requests:
-    memory: 16Gi
-
-makePolicyJob:
-  securityContext:
-    enabled: false
-    runAsUser: 1000
-    runAsGroup: 1000
-  resources:
-    requests:
-      memory: 128Mi
-  exitCommand: ""
-
-users:
-  - accessKey: console
-    secretKey: console123
-    policy: consoleAdmin
-
-makeUserJob:
-  securityContext:
-    enabled: false
-    runAsUser: 1000
-    runAsGroup: 1000
-  resources:
-    requests:
-      memory: 128Mi
-  exitCommand: ""
-
-makeServiceAccountJob:
-  securityContext:
-    enabled: false
-    runAsUser: 1000
-    runAsGroup: 1000
-  resources:
-    requests:
-      memory: 128Mi
-  exitCommand: ""
-
-buckets:
-  - name: lakehouse-data
-  - name: metastore
-  - name: trino
-
-makeBucketJob:
-  securityContext:
-    enabled: false
-    runAsUser: 1000
-    runAsGroup: 1000
-  resources:
-    requests:
-      memory: 128Mi
-  exitCommand: ""
-
-customCommands:
-customCommandJob:
-  securityContext:
-    enabled: false
-    runAsUser: 1000
-    runAsGroup: 1000
-  resources:
-    requests:
-      memory: 128Mi
-  exitCommand: ""
-
-postJob:
-  securityContext:
-    enabled: false
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
 
 serviceAccount:
   create: true
-  name: "minio-sa"
+  name: ""
+  automountServiceAccountToken: false
 
-metrics:
-  serviceMonitor:
-    enabled: false
-    includeNode: false
-    public: true
-    namespace: ~
-    interval: ~
-    scrapeTimeout: ~
+pdb:
+  create: true
+  minAvailable: ""
+  maxUnavailable: ""

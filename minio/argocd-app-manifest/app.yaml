@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: object-storage
+  name: minio
   namespace: gitops
 spec:
   project: default
   destination:
     name: 'victor-lab'
-    namespace: object-storage
+    namespace: minio
   syncPolicy:
     automated:
       prune: true
