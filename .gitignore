@@ -35,4 +35,5 @@ terraform.tfvars
 
 # Ignore git repo token
 git-repo*
-git-credentials-secret*
+secrets.yaml
+.vscode

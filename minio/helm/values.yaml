@@ -34,7 +34,7 @@ clientImage:
 mode: standalone
 
 auth:
-  existingSecret: minio-secret
+  existingSecret: minio-credentials
   rootUserSecretKey: rootUser
   rootPasswordSecretKey: rootPassword
   forcePassword: false

@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: minio
+  name: hive-metastore
   namespace: gitops
 spec:
   project: default
   destination:
     name: 'victor-lab'
-    namespace: minio
+    namespace: metastore
   syncPolicy:
     automated:
       prune: true
@@ -18,9 +18,9 @@ spec:
   - repoURL: 'https://github.com/victoru2/trino-lakehouse-lab.git'
     targetRevision: main
     ref: trino-lakehouse-lab
-  - repoURL: https://charts.bitnami.com/bitnami
-    chart: minio
-    targetRevision: 14.7.15
+  - repoURL: https://gradiant.github.io/bigdata-charts
+    chart: hive-metastore
+    targetRevision: 0.1.3
     helm:
       valueFiles:
-      - $trino-lakehouse-lab/minio/helm/values.yaml
+      - $trino-lakehouse-lab/metastore/helm/values.yaml

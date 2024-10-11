@@ -27,23 +27,29 @@ server:
   workerExtraConfig: ""
   coordinatorExtraConfig: ""
   autoscaling:
-    enabled: false
-    maxReplicas: 5
+    enabled: true
+    maxReplicas: 3
     targetCPUUtilizationPercentage: 50
     targetMemoryUtilizationPercentage: 80
     behavior: {}
 
-
 catalogs:
-  tpch: |
-    connector.name=tpch
-    tpch.splits-per-node=4
-  tpcds: |
-    connector.name=tpcds
-    tpcds.splits-per-node=4
+  iceberg: |-
+    connector.name=iceberg
+    iceberg.catalog.type=nessie
+    iceberg.file-format=PARQUET
+    iceberg.nessie-catalog.uri=http://nessie.nessie.svc.cluster.local:19120/api/v2
+    iceberg.nessie-catalog.default-warehouse-dir=s3a://metastore/warehouse/
+    fs.native-s3.enabled=true
+    s3.endpoint=http://minio.minio.svc.cluster.local
+    s3.region=us-east-1
+    s3.path-style-access=true
+    s3.aws-access-key=${AWS_ACCESS_KEY_ID}
+    s3.aws-secret-key=${AWS_SECRET_ACCESS_KEY}
 
-additionalCatalogs: {}
-
+envFrom:
+  - secretRef:
+      name: minio-credentials
 
 securityContext:
   runAsUser: 1000
@@ -80,6 +86,13 @@ coordinator:
       maxMemoryPerNode: "1GB"
 
   terminationGracePeriodSeconds: 30
+  # resources:
+  #   requests:
+  #     memory: 400Mi
+  #     cpu: 15m
+  #   limits:
+  #     memory: 1Gi
+  #     cpu: 350m
 
 worker:
   jvm:
@@ -100,6 +113,13 @@ worker:
     gracePeriodSeconds: 120
 
   terminationGracePeriodSeconds: 30
+  # resources:
+  #   requests:
+  #     memory: 400Mi
+  #     cpu: 15m
+  #   limits:
+  #     memory: 1Gi
+  #     cpu: 350m
 
 kafka:
   mountPath: "/etc/trino/schemas"

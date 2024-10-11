@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: minio
+  name: trino
   namespace: gitops
 spec:
   project: default
   destination:
     name: 'victor-lab'
-    namespace: minio
+    namespace: warehouse
   syncPolicy:
     automated:
       prune: true
@@ -18,9 +18,9 @@ spec:
   - repoURL: 'https://github.com/victoru2/trino-lakehouse-lab.git'
     targetRevision: main
     ref: trino-lakehouse-lab
-  - repoURL: https://charts.bitnami.com/bitnami
-    chart: minio
-    targetRevision: 14.7.15
+  - repoURL: https://trinodb.github.io/charts
+    chart: trino
+    targetRevision: 0.31.0
     helm:
       valueFiles:
-      - $trino-lakehouse-lab/minio/helm/values.yaml
+      - $trino-lakehouse-lab/trino/helm/values.yaml

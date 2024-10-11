@@ -8,17 +8,14 @@ helm repo add airbyte https://airbytehq.github.io/helm-charts
 helm repo update
 ```
 
-### 2. Obtain the [values.yaml](https://github.com/airbytehq/airbyte-platform/blob/main/charts/airbyte/values.yaml) File
+### 2. Fetch the default values file for Airbyte and save it locally to customize
 ```sh
-helm pull airbyte/airbyte --untar -d ./airbyte/airbyte-repo --version 0.551.0
-mkdir ./airbyte/helm
-cp ./airbyte/airbyte-repo/airbyte/values.yaml ./airbyte/helm/values.yaml
-rm -rf ./airbyte/airbyte-repo
+helm show values airbyte/airbyte > values.yaml
 ```
 
 ### 3. Install the Airbyte Service
 ```sh
-helm install -f ./airbyte/helm/values.yaml ingestion-airbyte airbyte/airbyte --namespace ingestion --version 0.551.0
+helm install -f ./airbyte/helm/values.yaml airbyte airbyte/airbyte --namespace ingestion --create-namespace --version 1.1.0
 ```
 
 ### Extra. Update the airbyte-db PVC
@@ -30,13 +27,6 @@ kubectl patch pvc airbyte-pvc-name -p '{"spec": {"resources": {"requests": {"sto
 ### Deploying with ArgoCD
 ```sh
 kubectl apply -f ./airbyte/argocd-app-manifest/app.yaml
-```
-
-# NOTES: Get the application URL by running these commands:
-```sh
-export POD_NAME=$(kubectl get pods --namespace ingestion -l "app.kubernetes.io/name=webapp" -o jsonpath="{.items[0].metadata.name}")
-export CONTAINER_PORT=$(kubectl get pod --namespace ingestion $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
-kubectl --namespace ingestion port-forward $POD_NAME 8080:$CONTAINER_PORT
 ```
 
 ###Credits
