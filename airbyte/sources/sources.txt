@@ -1,0 +1,5 @@
+https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1
+https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=1
+https://api.coingecko.com/api/v3/coins/cardano/market_chart?vs_currency=usd&days=1
+https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=usd&days=1
+https://api.coingecko.com/api/v3/coins/solana/market_chart?vs_currency=usd&days=1

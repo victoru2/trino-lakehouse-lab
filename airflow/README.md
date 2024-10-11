@@ -10,10 +10,15 @@ helm repo add apache-airflow https://airflow.apache.org
 helm repo update
 ```
 
+## Fetch the default values file for Airflow and save it locally to customize
+```sh
+helm show values apache-airflow/airflow > values.yaml
+```
+
 ## Create the secret with the git credentials
 - To create these credentials, we use [Personal access tokens](https://github.com/settings/tokens)
 ```sh
-kubectl apply -f ./airflow/helm/git-credentials-secret.yaml --namespace orchestrator
+kubectl apply -f ./secrets.yaml --namespace orchestrator
 ```
 
 ## To create the customized image, we use the configuration in the `lab-airflow` folder

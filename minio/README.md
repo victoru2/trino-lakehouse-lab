@@ -1,20 +1,12 @@
-## MinIO Deployment Using Helm and ArgoCD
+This folder contains the `MinIO` configurations.
 
-### Prerequisites
-- Ensure you have Helm and ArgoCD installed and configured in your Kubernetes cluster.
-- Add the Bitnami Helm repository for accessing MinIO.
-
-### Step-by-Step Guide
-
-1. Add Bitnami Helm Repository
+### Add repository to the cluster
 ```sh
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 helm search repo minio
 ```
-2. Get the MinIO Default Values
-
-Fetch the default values file for MinIO and save it locally to customize:
+### Fetch the default values file for MinIO and save it locally to customize
 ```sh
 helm show values bitnami/minio > values.yaml
 ```
@@ -22,7 +14,7 @@ helm show values bitnami/minio > values.yaml
 ### Set Up MinIO Credentials
 
 ```sh
-kubectl create secret generic minio-secret \
+kubectl create secret generic minio-credentials \
   --from-literal=rootUser=myminiouser \
   --from-literal=rootPassword=myminiopassword \
   -n minio

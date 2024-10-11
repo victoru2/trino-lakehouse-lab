@@ -1,0 +1,37 @@
+# The base hadoop image to use for all components.
+# See this repo for image build details: https://github.com/Comcast/kube-yarn/tree/master/image
+
+postgresql:
+  postgresqlUsername: hive
+  postgresqlPassword: hive
+  postgresqlDatabase: metastore
+
+  initdbScriptsConfigMap: hive-metastore-postgresql-init
+image:
+  repository: jboothomas/hive-metastore-s3
+  tag: v6
+  pullPolicy: IfNotPresent
+
+resources: {}
+conf:
+  hiveSite:
+    hive_metastore_uris: thrift://hive-metastore:9083
+    hive.metastore.warehouse.dir: s3a://metastore/warehouse/
+    fs.s3a.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+    fs.s3a.access.key: ${AWS_ACCESS_KEY_ID}
+    fs.s3a.secret.key: ${AWS_SECRET_ACCESS_KEY}
+    fs.s3a.endpoint: http://minio.minio.svc.cluster.local:9000
+    fs.s3a.path.style.access: true
+    fs.s3a.connection.ssl.enabled: false
+
+env:
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: minio-credentials
+        key: AWS_ACCESS_KEY_ID
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: minio-credentials
+        key: AWS_SECRET_ACCESS_KEY

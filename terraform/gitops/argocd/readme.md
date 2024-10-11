@@ -20,7 +20,7 @@ kubectl -n gitops get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 
 argocd login 0.0.0.0 --username admin --password "password" --insecure
-argocd cluster add my-cluster-name-original --name my-new-cluster-name
+argocd cluster add gke_victor-lab_us-central1_victor-lab --name victor-lab
 
 kubectl apply -f git-repo.yaml -n gitops
 ```
