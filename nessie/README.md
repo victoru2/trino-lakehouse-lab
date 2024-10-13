@@ -7,5 +7,5 @@ helm show values bitnami/nessie > values.yaml
 
 ### Deploying with ArgoCD
 ```sh
-kubectl apply -f ./metastore/argocd-app-manifest/app.yaml
+kubectl apply -f ./nessie/argocd-app-manifest/app.yaml
 ```

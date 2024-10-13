@@ -10,16 +10,6 @@ helm repo update
 helm show values trino/trino > values.yaml
 ```
 
-### Set Up MinIO Credentials
-```sh
-kubectl create namespace warehouse
-
-kubectl create secret generic minio-credentials \
-  --from-literal=AWS_ACCESS_KEY_ID=minio \
-  --from-literal=AWS_SECRET_ACCESS_KEY=minio123 \
-  --namespace warehouse
-```
-
 ### Install Trino Using Helm
 ```sh
 helm install -f ./trino/helm/values.yaml trino trino/trino --namespace warehouse --create-namespace --version 0.31.0
