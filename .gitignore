@@ -37,3 +37,4 @@ terraform.tfvars
 git-repo*
 secrets.yaml
 .vscode
+trino-values.yaml

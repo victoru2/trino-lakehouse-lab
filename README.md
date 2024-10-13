@@ -46,7 +46,6 @@ After deploying the Kubernetes cluster (in this case, using GCP), deploy ArgoCD 
 # Create namespaces
 kubectl create namespace minio
 kubectl create namespace metastore
-kubectl create namespace warehouse
 kubectl create namespace orchestrator
 
 # Apply secrets
@@ -54,6 +53,7 @@ kubectl apply -f secrets.yaml
 
 # Deploy applications
 kubectl apply -f ./minio/argocd-app-manifest/app.yaml    # Deploy the MinIO application
-kubectl apply -f ./metastore/argocd-app-manifest/app.yaml # Deploy the Metastore application
+kubectl apply -f ./hive-metastore/argocd-app-manifest/app.yaml # Deploy the Hive MetaStore application
+kubectl apply -f ./nessie/argocd-app-manifest/app.yaml # Deploy the Hive MetaStore application
 kubectl apply -f ./airbyte/argocd-app-manifest/app.yaml   # Deploy the Airbyte application
 ```
