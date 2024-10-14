@@ -10,3 +10,12 @@ sources:
   - name: cardano
   - name: ethereum
   - name: solana
+- name: iceberg_bronze
+  database: iceberg
+  schema: bronze
+  tables:
+  - name: binancecoin_bronze
+  - name: bitcoin_bronze
+  - name: cardano_bronze
+  - name: ethereum_bronze
+  - name: solana_bronze
