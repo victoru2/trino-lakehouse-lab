@@ -1,11 +1,5 @@
 astro-sdk-python==1.8.1
-dbt-core==1.8.6
-dbt-snowflake==1.8.3
-astronomer-cosmos==1.6.0
-apache-airflow-providers-snowflake==5.7.0
-boto3==1.35.0
-botocore==1.35.0
-jmespath==1.0.1
-python-dateutil==2.9.0
-s3transfer==0.10.2
-urllib3[socks]==2.2.2
+dbt-core==1.8.7
+dbt-trino==1.8.2
+astronomer-cosmos==1.7.0
+apache-airflow-providers-trino==5.8.0
