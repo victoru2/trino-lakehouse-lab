@@ -1,4 +1,4 @@
-kubectl exec -it trino-coordinator-75cdf47cbd-7lqsd -n warehouse -- trino
+kubectl exec -it trino-coordinator-75cdf47cbd-ldj4v -n warehouse -- trino
 
 SHOW CATALOGS;
 
@@ -9,8 +9,6 @@ SHOW TABLES FROM <nombre_catalogo>.<nombre_schema>;
 
 
 CREATE SCHEMA IF NOT EXISTS minio.landing WITH (location = 's3://lakehouse-data/landing');
-CREATE SCHEMA IF NOT EXISTS iceberg.landing WITH (location = 's3://lakehouse-data/landing');
-CREATE SCHEMA IF NOT EXISTS minio.bronze WITH (location = 's3://lakehouse-data/bronze');
 CREATE SCHEMA IF NOT EXISTS iceberg.bronze WITH (location = 's3://lakehouse-data/bronze');
 
 
@@ -30,7 +28,7 @@ CREATE TABLE minio.landing.bitcoinvii (
     external_location = 's3a://lakehouse-data/landing/bitcoin'
 );
 
-SELECT * FROM minio.landing.bitcoinvii LIMIT 100;
+SELECT * FROM minio.landing.bitcoin LIMIT 10;
 
 SELECT _airbyte_raw_id AS id, _airbyte_data AS data_raw FROM minio.landing.bitcoinvii LIMIT 10;
 

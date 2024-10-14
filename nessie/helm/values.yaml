@@ -108,7 +108,7 @@ autoscaling:
     targetMemory: ""
 service:
   server:
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       http: 19120
     nodePorts:
@@ -156,7 +156,7 @@ persistence:
   storageClass: ""
 
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   size: 8Gi
   existingClaim: ""
 
