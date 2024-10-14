@@ -6,18 +6,42 @@ minio:
       threads: 1
       catalog: minio
       schema: landing
-      host: localhost
+      host: 35.222.72.152
       port: 8080
       user: trino
 
-iceberg:
+iceberg_bronze:
   target: prod
   outputs:
     prod:
       type: trino
       threads: 1
       catalog: iceberg
-      schema: stage
-      host: localhost
+      schema: bronze
+      host: 35.222.72.152
+      port: 8080
+      user: trino
+
+iceberg_silver:
+  target: prod
+  outputs:
+    prod:
+      type: trino
+      threads: 1
+      catalog: iceberg
+      schema: silver
+      host: 35.222.72.152
+      port: 8080
+      user: trino
+
+iceberg_gold:
+  target: prod
+  outputs:
+    prod:
+      type: trino
+      threads: 1
+      catalog: iceberg
+      schema: gold
+      host: 35.222.72.152
       port: 8080
       user: trino

@@ -1,8 +1,7 @@
 {{
     config(
         materialized='table',
-        schema='bronze',
-        alias='cardano'
+        tags=["bronze"]
     )
 }}
 WITH raw_data AS (

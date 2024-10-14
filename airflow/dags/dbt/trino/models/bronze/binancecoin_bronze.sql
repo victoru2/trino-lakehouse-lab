@@ -1,21 +1,20 @@
 {{
     config(
         materialized='table',
-        schema='bronze',
-        alias='bitcoin'
+        tags=["bronze"]
     )
 }}
 WITH raw_data AS (
 SELECT DISTINCT
-    'btc' AS coin_id,
-    'bitcoin' AS coin_name,
+    'bnb' AS coin_id,
+    'binancecoin' AS coin_name,
 	_airbyte_raw_id AS id,
     _airbyte_extracted_at AS extracted_at,
     _airbyte_generation_id AS generation_id,
     _airbyte_meta AS metadata,
     _airbyte_data AS raw_data
 FROM
-	{{ source('minio', 'bitcoin') }})
+	{{ source('minio', 'binancecoin') }})
 SELECT
 	*
 FROM
