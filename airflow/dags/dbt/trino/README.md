@@ -6,6 +6,9 @@ Try running the following commands:
 - dbt run
 - dbt test
 
+dbt run --select bronze --profile iceberg --target prod
+
+
 
 ### Resources:
 - Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)

@@ -7,23 +7,23 @@ airflowHome: /opt/airflow
 
 defaultAirflowRepository: apache/airflow
 
-defaultAirflowTag: "2.10.1"
+defaultAirflowTag: "2.10.2"
 
 defaultAirflowDigest: ~
 
-airflowVersion: "2.10.1"
+airflowVersion: "2.10.2"
 
 images:
   airflow:
     repository: vurquiola2/airflow-with-extra-packages
-    tag: 2.10.1
+    tag: 2.10.2
     digest: ~
     pullPolicy: Always
   useDefaultImageForMigration: false
   migrationsWaitTimeout: 60
   pod_template:
     repository: vurquiola2/airflow-with-extra-packages
-    tag: 2.10.1
+    tag: 2.10.2
     pullPolicy: IfNotPresent
   flower:
     repository: ~

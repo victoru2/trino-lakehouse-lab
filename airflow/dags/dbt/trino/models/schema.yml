@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+- name: minio
+  database: minio
+  schema: landing
+  tables:
+  - name: binancecoin
+  - name: bitcoin
+  - name: cardano
+  - name: ethereum
+  - name: solana

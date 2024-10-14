@@ -6,7 +6,7 @@ name: 'dbt_cosmos'
 version: '1.0.0'
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'dbt_cosmos'
+profile: 'minio'
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -29,10 +29,10 @@ clean-targets: # directories to be removed by `dbt clean`
 # In this example config, we tell dbt to build all models in the example/
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
-models:
-  dbt_cosmos:
-    # Config indicated by + and applies to all files under models/example/
-    bronze:
-      +materialized: tables
-    silver:
-      +materialized: tables
+# models:
+#   dbt_cosmos:
+#     # Config indicated by + and applies to all files under models/example/
+#     bronze:
+#       +materialized: tables
+#     silver:
+#       +materialized: tables

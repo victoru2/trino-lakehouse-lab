@@ -13,7 +13,7 @@ def exemplo_extracao():
 
 
 def exemplo_carga():
-    print("Carregando dados do S3 para Snowflake")
+    print("Carregando dados do S3 para trino")
 
 
 def exemplo_transformacao():
