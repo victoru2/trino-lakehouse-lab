@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-theus-stack
+  namespace: gitops
+spec:
+  project: default
+  destination:
+    name: 'victor-lab'
+    namespace: monitoring-infra
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+  sources:
+  - repoURL: 'https://github.com/victoru2/trino-lakehouse-lab.git'
+    targetRevision: main
+    ref: trino-lakehouse-lab
+  - repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 65.2.0
+    helm:
+      valueFiles:
+      - $trino-lakehouse-lab/monitoring/infra/kube-prometheus-stack/argocd-app-manifest/app.yaml
