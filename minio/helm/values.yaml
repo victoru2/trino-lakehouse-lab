@@ -42,7 +42,7 @@ auth:
   useSecret: true
   forceNewKeys: false
 
-defaultBuckets: "lakehouse-data, metastore, trino"
+defaultBuckets: "raw-data-lake, lakehouse, trino"
 
 disableWebUI: false
 extraEnvVars: []
@@ -152,7 +152,7 @@ service:
   externalTrafficPolicy: Cluster
   extraPorts: []
   headless:
-  
+
 networkPolicy:
   enabled: true
   allowExternal: true
@@ -169,7 +169,7 @@ persistence:
   storageClass: standard
   mountPath: /bitnami/minio/data
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   size: 8Gi
   existingClaim: ""
 
