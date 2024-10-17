@@ -5,5 +5,5 @@ helm show values prometheus-community/prometheus > values.yaml
 
 ### Deploying with ArgoCD
 ```sh
-kubectl apply -f ./observability/infra/prometheus/argocd-app-manifest/app.yaml
+kubectl apply -f ./monitoring/infra/prometheus/argocd-app-manifest/app.yaml
 ```

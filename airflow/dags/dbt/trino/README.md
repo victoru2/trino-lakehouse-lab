@@ -7,6 +7,7 @@ Try running the following commands:
 - dbt test
 
 dbt debug
+dbt run --select bronze --profile iceberg_bronze --target prod
 dbt run --select silver --profile iceberg_silver --target prod
 dbt run --select tag:silver --profile iceberg_silver
 

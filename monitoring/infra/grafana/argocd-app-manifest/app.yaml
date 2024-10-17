@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observability-grafana
+  name: monitoring-grafana
   namespace: gitops
 spec:
   project: default
   destination:
     name: 'victor-lab'
-    namespace: observability-infra
+    namespace: monitoring-infra
   syncPolicy:
     automated:
       prune: true
@@ -23,4 +23,4 @@ spec:
     targetRevision: 8.5.2
     helm:
       valueFiles:
-      - $trino-lakehouse-lab/observability/infra/grafana/helm/values.yaml
+      - $trino-lakehouse-lab/monitoring/infra/grafana/helm/values.yaml

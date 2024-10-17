@@ -40,9 +40,9 @@ service/
 
 ## Deploying ArgoCD Applications
 
-After deploying the Kubernetes cluster (in this case, using GCP), deploy ArgoCD and then execute the following commands to deploy the necessary applications:
+After deploying the [Kubernetes cluster (in this case, using GCP)](https://github.com/victoru2/trino-lakehouse-lab/tree/main/terraform/gcp), [deploy ArgoCD](https://github.com/victoru2/trino-lakehouse-lab/tree/main/terraform/gitops/argocd) and then execute the following commands to deploy the necessary applications:
 
-```bash
+```sh
 # Create namespaces
 kubectl create namespace minio
 kubectl create namespace metastore
@@ -53,7 +53,19 @@ kubectl apply -f secrets.yaml
 
 # Deploy applications
 kubectl apply -f ./minio/argocd-app-manifest/app.yaml    # Deploy the MinIO application
-kubectl apply -f ./hive-metastore/argocd-app-manifest/app.yaml # Deploy the Hive MetaStore application
-kubectl apply -f ./nessie/argocd-app-manifest/app.yaml # Deploy the Hive MetaStore application
 kubectl apply -f ./airbyte/argocd-app-manifest/app.yaml   # Deploy the Airbyte application
+kubectl apply -f ./hive-metastore/argocd-app-manifest/app.yaml # Deploy the Hive MetaStore application
+kubectl apply -f ./nessie/argocd-app-manifest/app.yaml # Deploy the Nessie application
+# kubectl apply -f ./trino/argocd-app-manifest/app.yaml # Deploy the Hive Trino application
+helm install -f ./trino/helm/trino-values.yaml trino trino/trino --namespace warehouse --create-namespace --version 0.31.0
+```
+
+Update the file `airflow/dags/dbt/trino/profiles.yml` with the **external IP** of **Trino**, then execute the following command:
+```sh
+helm upgrade --install orchestrator-airflow apache-airflow/airflow -n orchestrator -f ./airflow/helm/values.yaml --version 1.15.0
+```sh
+
+Alternatively, open a new pull request (PR), merge it into the main branch, and then execute the following command:
+```sh
+kubectl apply -f ./airflow/argocd-app-manifest/app.yaml   # Deploy the Airflow application
 ```

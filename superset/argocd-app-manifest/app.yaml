@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: airflow
+  name: superset
   namespace: gitops
 spec:
   project: default
   destination:
     name: 'victor-lab'
-    namespace: orchestrator
+    namespace: dataviz
   syncPolicy:
     automated:
       prune: true
@@ -18,9 +18,9 @@ spec:
   - repoURL: 'https://github.com/victoru2/trino-lakehouse-lab.git'
     targetRevision: main
     ref: trino-lakehouse-lab
-  - repoURL: https://airflow.apache.org
-    chart: airflow
-    targetRevision: 1.15.0
+  - repoURL: http://apache.github.io/superset
+    chart: superset
+    targetRevision: 0.12.11
     helm:
       valueFiles:
-      - $trino-lakehouse-lab/airflow/helm/values.yaml
+      - $trino-lakehouse-lab/superset/helm/values.yaml
