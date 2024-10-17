@@ -29,13 +29,13 @@ Applying configuration to create the GKE cluster
 terraform apply -auto-approve
 ```
 
-Destroying the GKE cluster
-```sh
-terraform destroy -auto-approve
-```
-
 after config gcloud
 ```sh
 gcloud components install gke-gcloud-auth-plugin
 gcloud container clusters get-credentials victor-lab --region us-central1 --project victor-lab
+```
+
+Destroying the GKE cluster
+```sh
+terraform destroy -auto-approve
 ```

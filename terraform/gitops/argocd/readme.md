@@ -9,6 +9,7 @@ sudo chmod +x /usr/local/bin/argocd
 ### build
 ```sh
 terraform init
+terraform plan
 terraform apply -auto-approve
 ```
 
