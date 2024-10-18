@@ -45,10 +45,13 @@ After deploying the [Kubernetes cluster (in this case, using GCP)](https://githu
 ```sh
 # Create namespaces
 kubectl create namespace minio
-kubectl create namespace metastore
 kubectl create namespace orchestrator
-
+```
 # Apply secrets
+
+Write the `MinIO` and `GitHub` username and password in `base64` format in the `example-secrets.yaml` file and rename it to `secrets.yaml`.
+Then, apply the secrets with the following command:
+```sh
 kubectl apply -f secrets.yaml
 
 # Deploy applications
@@ -58,14 +61,5 @@ kubectl apply -f ./hive-metastore/argocd-app-manifest/app.yaml # Deploy the Hive
 kubectl apply -f ./nessie/argocd-app-manifest/app.yaml # Deploy the Nessie application
 # kubectl apply -f ./trino/argocd-app-manifest/app.yaml # Deploy the Hive Trino application
 helm install -f ./trino/helm/trino-values.yaml trino trino/trino --namespace warehouse --create-namespace --version 0.31.0
-```
-
-Update the file `airflow/dags/dbt/trino/profiles.yml` with the **external IP** of **Trino**, then execute the following command:
-```sh
 helm upgrade --install orchestrator-airflow apache-airflow/airflow -n orchestrator -f ./airflow/helm/values.yaml --version 1.15.0
-```sh
-
-Alternatively, open a new pull request (PR), merge it into the main branch, and then execute the following command:
-```sh
-kubectl apply -f ./airflow/argocd-app-manifest/app.yaml   # Deploy the Airflow application
 ```

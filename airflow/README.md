@@ -28,7 +28,7 @@ kubectl apply -f ./secrets.yaml --namespace orchestrator
 ## Deploy in the production environment
 - [Helm chart Values](https://github.com/apache/airflow/blob/main/chart/values.yaml)
 ```sh
-helm upgrade --install orchestrator-airflow apache-airflow/airflow -n orchestrator -f ./airflow/helm/values.yaml --version 1.15.0
+helm upgrade --install airflow apache-airflow/airflow -n orchestrator -f ./airflow/helm/values.yaml --version 1.15.0
 ```
 ## To access Airflow
 ```sh
