@@ -1,4 +1,4 @@
-kubectl exec -it trino-coordinator-75cdf47cbd-w84mr -n warehouse -- trino
+kubectl exec -it trino-coordinator-pod-name -n warehouse -- trino
 
 SHOW CATALOGS;
 
