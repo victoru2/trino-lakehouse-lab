@@ -151,7 +151,7 @@ workers:
     name: ~
 
   hpa:
-    enabled: true
+    enabled: false
 
     minReplicaCount: 1
     maxReplicaCount: 3
