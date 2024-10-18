@@ -3,14 +3,13 @@ Welcome to your new dbt project!
 ### Using the starter project
 
 Try running the following commands:
-- dbt run
-- dbt test
-
+```sh
 dbt debug
 dbt run --select bronze --profile iceberg_bronze --target prod
 dbt run --select silver --profile iceberg_silver --target prod
 dbt run --select tag:silver --profile iceberg_silver
-
+dbt run --select gold --profile iceberg_gold --target prod
+```
 
 ### Resources:
 - Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)

@@ -8,19 +8,9 @@ helm repo update
 helm show values bigdata-gradiant/hive-metastore > values.yaml
 ```
 
-helm search repo bigdata-gradiant
-kubectl create namespace metastore
-
-### Set Up MinIO Credentials
-```sh
-kubectl create secret generic minio-credentials \
-  --from-literal=rootUser=myminiouser \
-  --from-literal=rootPassword=myminiopassword \
-  -n metastore
-```
 ### Install Hive MetaStore Using Helm
 ```sh
-helm install hivems bigdata-gradiant/hive-metastore -n metastore -f values.yaml
+helm install hivems bigdata-gradiant/hive-metastore -n metastore -f ./hive-metastore/helm/values.yaml --create-namespace
 ```
 
 ### Checking Hive Metastore Connection on Kubernetes

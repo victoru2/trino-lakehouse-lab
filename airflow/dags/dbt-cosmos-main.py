@@ -23,21 +23,32 @@ default_args = {
 default_dbt_root_path = Path(__file__).parent / "dbt/trino"
 dbt_root_path = Path(os.getenv("DBT_ROOT_PATH", default_dbt_root_path))
 
-profile_bronze = ProfileConfig(
-    profile_name="iceberg_bronze",
-    target_name="prod",
-    profiles_yml_filepath=(dbt_root_path / "profiles.yml")
-)
 
-profile_silver = ProfileConfig(
-    profile_name="iceberg_silver",
-    target_name="prod",
-    profiles_yml_filepath=(dbt_root_path / "profiles.yml")
-)
+def create_profile_config(profile_name, target_name):
+    return ProfileConfig(
+        profile_name=profile_name,
+        target_name=target_name,
+        profiles_yml_filepath=(dbt_root_path / "profiles.yml")
+    )
+
+
+def create_dbt_task_group(group_id,
+                          profile_name,
+                          target_name,
+                          project_config,
+                          path):
+    return DbtTaskGroup(
+        group_id=group_id,
+        project_config=project_config,
+        profile_config=create_profile_config(profile_name, target_name),
+        render_config=RenderConfig(select=[f"path:models/{path}"])
+    )
+
 
 project_config = ProjectConfig(
     dbt_project_path=(dbt_root_path)
 )
+
 
 @dag(
     dag_id="dbt_iceberg_transform_with_schemas",
@@ -52,20 +63,23 @@ def dbt_iceberg_dag():
 
     start_task = EmptyOperator(task_id="start")
 
-    bronze_task_group = DbtTaskGroup(
-        group_id="bronze_models",
-        project_config=project_config,
-        profile_config=profile_bronze,
-        render_config=RenderConfig(select=['path:models/bronze'])
+    task_groups = ["bronze", "silver", "gold"]
+    tasks = {}
+
+    for group in task_groups:
+        tasks[group] = create_dbt_task_group(
+            f"{group}_models",
+            f"iceberg_{group}",
+            "prod",
+            project_config,
+            group)
+
+    (
+        start_task >>
+        tasks['bronze'] >>
+        tasks['silver'] >>
+        tasks['gold']
     )
 
-    silver_task_group = DbtTaskGroup(
-        group_id="silver_models",
-        project_config=project_config,
-        profile_config=profile_silver,
-        render_config=RenderConfig(select=['path:models/silver'])
-    )
-
-    start_task >> bronze_task_group >> silver_task_group
 
 dbt_iceberg_dag = dbt_iceberg_dag()

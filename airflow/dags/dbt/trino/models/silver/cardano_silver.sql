@@ -6,16 +6,44 @@
 }}
 WITH 
     raw_data AS (
-        SELECT DISTINCT
-            coin_id,
-            coin_name,
-            CAST(from_unixtime(CAST(price[1] / 1000 AS bigint)) AS varchar) AS ctimestamp,
-            price[2] AS price
+        SELECT
+            json_extract(cast(raw_data AS varchar), '$._airbyte_data') AS raw_column
         FROM
-            {{ source('iceberg_bronze', 'cardano_bronze') }},
-            UNNEST(cast(json_extract(cast(raw_data AS varchar), '$.prices') AS array(array(double)))) AS t(price)
+            {{ source('iceberg_bronze', 'cardano_bronze') }}
+    ),
+    expanded_data AS (
+        SELECT
+            json_extract_scalar(raw_column, '$.id') AS id,
+            json_extract_scalar(raw_column, '$.symbol') AS symbol,
+            json_extract_scalar(raw_column, '$.name') AS name,
+            json_extract_scalar(raw_column, '$.last_updated') AS last_updated,
+            -- Aplicamos filtro para encontrar solo los elementos con market.name = 'Binance' y target = 'USDT'
+            element_at(
+                filter(
+                    cast(json_extract(raw_column, '$.tickers') AS array(json)),
+                    ticker -> 
+                        json_extract_scalar(ticker, '$.market.name') = 'Binance' 
+                        AND json_extract_scalar(ticker, '$.target') = 'USDT'
+                ), 
+                1
+            ) AS binance_usdt_ticker
+        FROM
+            raw_data
     )
 SELECT
-	*
-FROM
-	raw_data
+    id
+    ,symbol
+    ,name
+    ,from_iso8601_timestamp(last_updated) AS last_updated
+    ,json_extract_scalar(binance_usdt_ticker, '$.base') AS base
+    ,json_extract_scalar(binance_usdt_ticker, '$.target') AS target
+    ,json_extract_scalar(binance_usdt_ticker, '$.market.name') AS market
+    ,CAST(json_extract_scalar(binance_usdt_ticker, '$.last') AS DECIMAL(10,2)) AS last_value
+    ,CAST(json_extract_scalar(binance_usdt_ticker, '$.volume') AS DECIMAL(18,6)) AS volume
+    ,CAST(json_extract_scalar(binance_usdt_ticker, '$.converted_volume.usd') AS BIGINT) AS converted_volume_usd
+    ,json_extract_scalar(binance_usdt_ticker, '$.trust_score') AS trust_score
+    ,from_iso8601_timestamp(json_extract_scalar(binance_usdt_ticker, '$.timestamp')) AS timestamp
+    ,CAST(json_extract_scalar(binance_usdt_ticker, '$.bid_ask_spread_percentage') AS DECIMAL(10,6)) AS bid_ask_spread_percentage
+FROM 
+    expanded_data
+WHERE binance_usdt_ticker IS NOT NULL

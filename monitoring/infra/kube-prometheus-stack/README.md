@@ -7,7 +7,7 @@ helm search repo prometheus
 helm show values prometheus/kube-prometheus-stack > values.yaml
 ```
 
-helm upgrade --install -f values.yaml theus-stack prometheus/kube-prometheus-stack -n monitoring-infra --create-namespace
+helm upgrade --install -f ./monitoring/infra/kube-prometheus-stack/helm/values.yaml theus-stack prometheus/kube-prometheus-stack -n monitoring-infra --create-namespace
 <!-- helm upgrade --install theus-stack prometheus/kube-prometheus-stack --namespace monitoring --set grafana.adminPassword="mkanusm_123*" --create-namespace -->
 
 
@@ -15,5 +15,5 @@ helm upgrade --install -f values.yaml theus-stack prometheus/kube-prometheus-sta
 
 ### Deploying with ArgoCD
 ```sh
-kubectl apply -f ./observability/infra/prometheus/argocd-app-manifest/app.yaml
+kubectl apply -f ./monitoring/infra/kube-prometheus-stack/argocd-app-manifest/app.yaml
 ```

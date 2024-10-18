@@ -6,7 +6,7 @@ minio:
       threads: 1
       catalog: minio
       schema: landing
-      host: 104.198.25.189
+      host: 34.171.1.7
       port: 8080
       user: trino
 
@@ -18,7 +18,7 @@ iceberg_bronze:
       threads: 1
       catalog: iceberg
       schema: bronze
-      host: 104.198.25.189
+      host: 34.171.1.7
       port: 8080
       user: trino
 
@@ -30,7 +30,7 @@ iceberg_silver:
       threads: 1
       catalog: iceberg
       schema: silver
-      host: 104.198.25.189
+      host: 34.171.1.7
       port: 8080
       user: trino
 
@@ -42,6 +42,6 @@ iceberg_gold:
       threads: 1
       catalog: iceberg
       schema: gold
-      host: 104.198.25.189
+      host: 34.171.1.7
       port: 8080
       user: trino
