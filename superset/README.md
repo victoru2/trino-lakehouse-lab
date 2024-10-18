@@ -25,7 +25,8 @@ configOverrides:
 helm upgrade --install -f ./superset/helm/values.yaml superset superset/superset --namespace dataviz --create-namespace --version 0.12.11
 ```
 
-trino://admin@trino-service.namespace.svc.cluster.local:8080/iceberg/gold
+trino://admin@trino.warehouse.svc.cluster.local:8080/iceberg/gold
+trino://admin@host:8080/iceberg/gold
 
 
 ### Deploying with ArgoCD

@@ -21,6 +21,7 @@ serviceAccountName: ~
 # @default -- see `values.yaml`
 bootstrapScript: |
   #!/bin/bash
+  pip install trino==0.330.0
   if [ ! -f ~/bootstrap ]; then echo "Running Superset with uid {{ .Values.runAsUser }}" > ~/bootstrap; fi
 
 # -- The name of the secret which we will use to generate a superset_config.py file
