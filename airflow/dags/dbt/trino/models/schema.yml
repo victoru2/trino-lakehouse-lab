@@ -19,3 +19,12 @@ sources:
   - name: cardano_bronze
   - name: ethereum_bronze
   - name: solana_bronze
+- name: iceberg_silver
+  database: iceberg
+  schema: silver
+  tables:
+  - name: binancecoin_silver
+  - name: bitcoin_silver
+  - name: cardano_silver
+  - name: ethereum_silver
+  - name: solana_silver
