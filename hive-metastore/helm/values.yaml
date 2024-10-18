@@ -20,7 +20,7 @@ conf:
     fs.s3a.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
     fs.s3a.access.key: ${AWS_ACCESS_KEY_ID}
     fs.s3a.secret.key: ${AWS_SECRET_ACCESS_KEY}
-    fs.s3a.endpoint: http://minio.minio.svc.cluster.local:9000
+    hive.s3.endpoint: http://minio.minio.svc.cluster.local:9000
     fs.s3a.path.style.access: true
     fs.s3a.connection.ssl.enabled: false
 
@@ -29,9 +29,9 @@ env:
   valueFrom:
     secretKeyRef:
       name: minio-credentials
-      key: AWS_ACCESS_KEY_ID
+      key: rootUser
 - name: AWS_SECRET_ACCESS_KEY
   valueFrom:
     secretKeyRef:
       name: minio-credentials
-      key: AWS_SECRET_ACCESS_KEY
+      key: rootPassword
