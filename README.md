@@ -38,7 +38,7 @@ service/
 └── README.md
 ```
 
-## Deploying ArgoCD Applications
+### Deploying ArgoCD Applications
 
 After deploying the [Kubernetes cluster (in this case, using GCP)](https://github.com/victoru2/trino-lakehouse-lab/tree/main/terraform/gcp), [deploy ArgoCD](https://github.com/victoru2/trino-lakehouse-lab/tree/main/terraform/gitops/argocd) and then execute the following commands to deploy the necessary applications:
 
@@ -47,22 +47,44 @@ After deploying the [Kubernetes cluster (in this case, using GCP)](https://githu
 kubectl create namespace minio
 kubectl create namespace orchestrator
 ```
-# Apply secrets
+### Apply secrets
 
 Write the `MinIO` and `GitHub` username and password in `base64` format in the `example-secrets.yaml` file and rename it to `secrets.yaml`.
 Then, apply the secrets with the following command:
 ```sh
 kubectl apply -f secrets.yaml
+```
 
-# Deploy applications
+### Application Deployment - Part 1
+```sh
+kubectl apply -f ./monitoring/infra/kube-prometheus-stack/argocd-app-manifest/app.yaml # Deploy the Prometheus Stack application
 kubectl apply -f ./minio/argocd-app-manifest/app.yaml    # Deploy the MinIO application
 kubectl apply -f ./airbyte/argocd-app-manifest/app.yaml   # Deploy the Airbyte application
 kubectl apply -f ./hive-metastore/argocd-app-manifest/app.yaml # Deploy the Hive MetaStore application
 kubectl apply -f ./nessie/argocd-app-manifest/app.yaml # Deploy the Nessie application
-kubectl apply -f ./trino/argocd-app-manifest/app.yaml # Deploy the Trino application
-# helm install -f ./trino/helm/trino-values.yaml trino trino/trino --namespace warehouse --create-namespace --version 0.31.0
-helm upgrade --install orchestrator-airflow apache-airflow/airflow -n orchestrator -f ./airflow/helm/values.yaml --version 1.15.0
+```
+<!-- kubectl apply -f ./trino/argocd-app-manifest/app.yaml # Deploy the Trino application -->
+
+### Edit S3 Credentials
+- Open the values.yaml file and locate the following placeholder S3 credentials:
+```sh
+s3.aws-access-key=minio
+s3.aws-secret-key=minio123
+```
+
+- Replace these values with your own S3 bucket credentials.
+
+- Rename the file to trino-values.yaml.
+
+- Execute the following command to install Trino:
+
+```sh
+helm install -f ./trino/helm/trino-values.yaml trino trino/trino --namespace warehouse --create-namespace --version 0.31.0
+```
+### Application Deployment - Part 2
+```sh
 kubectl apply -f ./airflow/argocd-app-manifest/app.yaml # Deploy the Airflow-DBT application
 kubectl apply -f ./superset/argocd-app-manifest/app.yaml # Deploy the Superset application
-kubectl apply -f ./monitoring/infra/kube-prometheus-stack/argocd-app-manifest/app.yaml # Deploy the Prometheus Stack application
 ```
+### Note:
+- Before activating the `Airflow DAG`, create the tables in the minio.landing schema, which are defined in the [landing_tables](https://github.com/victoru2/trino-lakehouse-lab/blob/main/airflow/dags/sql/landing_tables.sql) file.
