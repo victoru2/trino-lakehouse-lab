@@ -170,7 +170,7 @@ persistence:
   mountPath: /bitnami/minio/data
   accessModes:
   - ReadWriteOnce
-  size: 8Gi
+  size: 30Gi
   existingClaim: ""
 
 serviceAccount:
