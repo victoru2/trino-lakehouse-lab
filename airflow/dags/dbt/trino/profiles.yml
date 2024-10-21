@@ -1,47 +1,54 @@
+common: &common_settings
+  type: trino
+  threads: 1
+  host: trino.warehouse.svc.cluster.local
+  port: 8080
+  user: trino
+
 minio:
   target: prod
   outputs:
     prod:
-      type: trino
-      threads: 1
+      !!merge <<: *common_settings
       catalog: minio
       schema: landing
-      host: trino.warehouse.svc.cluster.local
-      port: 8080
-      user: trino
+    dev:
+      !!merge <<: *common_settings
+      catalog: minio
+      schema: landing
 
 iceberg_bronze:
   target: prod
   outputs:
     prod:
-      type: trino
-      threads: 1
+      !!merge <<: *common_settings
       catalog: iceberg
       schema: bronze
-      host: trino.warehouse.svc.cluster.local
-      port: 8080
-      user: trino
+    dev:
+      !!merge <<: *common_settings
+      catalog: iceberg
+      schema: bronze
 
 iceberg_silver:
   target: prod
   outputs:
     prod:
-      type: trino
-      threads: 1
+      !!merge <<: *common_settings
       catalog: iceberg
       schema: silver
-      host: trino.warehouse.svc.cluster.local
-      port: 8080
-      user: trino
+    dev:
+      !!merge <<: *common_settings
+      catalog: iceberg
+      schema: silver
 
 iceberg_gold:
   target: prod
   outputs:
     prod:
-      type: trino
-      threads: 1
+      !!merge <<: *common_settings
       catalog: iceberg
       schema: gold
-      host: trino.warehouse.svc.cluster.local
-      port: 8080
-      user: trino
+    dev:
+      !!merge <<: *common_settings
+      catalog: iceberg
+      schema: gold
