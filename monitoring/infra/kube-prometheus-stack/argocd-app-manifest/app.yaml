@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring-theus-stack
+  name: prometheus-stack
   namespace: gitops
 spec:
   project: default

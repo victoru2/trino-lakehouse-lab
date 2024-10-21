@@ -62,4 +62,6 @@ kubectl apply -f ./nessie/argocd-app-manifest/app.yaml # Deploy the Nessie appli
 # kubectl apply -f ./trino/argocd-app-manifest/app.yaml # Deploy the Hive Trino application
 helm install -f ./trino/helm/trino-values.yaml trino trino/trino --namespace warehouse --create-namespace --version 0.31.0
 helm upgrade --install orchestrator-airflow apache-airflow/airflow -n orchestrator -f ./airflow/helm/values.yaml --version 1.15.0
+kubectl apply -f ./superset/argocd-app-manifest/app.yaml # Deploy the Superset application
+kubectl apply -f ./monitoring/infra/kube-prometheus-stack/argocd-app-manifest/app.yaml # Deploy the Prometheus Stack application
 ```
