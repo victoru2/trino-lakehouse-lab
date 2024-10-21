@@ -15,7 +15,7 @@ helm show values trino/trino > trino-values.yaml
 helm install -f ./trino/helm/trino-values.yaml trino trino/trino --namespace warehouse --create-namespace --version 0.31.0
 ```
 
-### Deploying with ArgoCD
+<!-- ### Deploying with ArgoCD
 ```sh
 kubectl apply -f ./trino/argocd-app-manifest/app.yaml
-```
+``` -->

@@ -39,8 +39,8 @@ catalogs:
     hive.metastore=file
     hive.metastore.catalog.dir=s3://trino/
     fs.native-s3.enabled=true
-    s3.aws-access-key=${rootUser}
-    s3.aws-secret-key=${rootPassword}
+    s3.aws-access-key=minio
+    s3.aws-secret-key=minio123
     s3.endpoint=http://minio.minio.svc.cluster.local:9000
     s3.region=us-east-1
     s3.path-style-access=true
@@ -54,29 +54,8 @@ catalogs:
     s3.endpoint=http://minio.minio.svc.cluster.local:9000
     s3.region=us-east-1
     s3.path-style-access=true
-    s3.aws-access-key=${rootUser}
-    s3.aws-secret-key=${rootPassword}
-
-env:
-- name: rootUser
-  valueFrom:
-    secretKeyRef:
-      name: minio-credentials
-      key: rootUser
-- name: rootPassword
-  valueFrom:
-    secretKeyRef:
-      name: minio-credentials
-      key: rootPassword
-
-envFrom:
-- secretRef:
-    name: minio-credentials
-
-secretMounts:
-- name: minio-credentials
-  secretName: minio-credentials
-  path: /secrets/minio
+    s3.aws-access-key=minio
+    s3.aws-secret-key=minio123
 
 securityContext:
   runAsUser: 1000
