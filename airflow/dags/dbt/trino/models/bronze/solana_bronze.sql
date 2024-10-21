@@ -5,10 +5,11 @@
     )
 }}
 WITH raw_data AS (
-SELECT DISTINCT
-    raw_data
-FROM
-	{{ source('minio', 'solana') }})
+    SELECT DISTINCT
+        raw_data
+    FROM
+        {{ source('minio', 'solana') }}
+        {{ sample_rows(10) }})
 SELECT
 	*
 FROM
