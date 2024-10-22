@@ -62,8 +62,8 @@ statefulset:
     type: RollingUpdate
   podManagementPolicy: Parallel
   replicaCount: 2
-  zones: 1
-  drivesPerNode: 1
+  zones: 2
+  drivesPerNode: 2
 
 
 automountServiceAccountToken: false
@@ -111,7 +111,13 @@ topologySpreadConstraints: []
 priorityClassName: ""
 runtimeClassName: ""
 resourcesPreset: "micro"
-resources: {}
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 15m
+  limits:
+    memory: 1Gi
+    cpu: 50m
 
 livenessProbe:
   enabled: true

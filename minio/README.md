@@ -22,7 +22,7 @@ kubectl create secret generic minio-credentials \
 
 ### Install MinIO Using Helm
 ```sh
-helm install minio bitnami/minio --namespace minio --create-namespace -f ./helm/values.yaml --version 14.7.15
+helm install minio bitnami/minio --namespace minio --create-namespace -f ./minio/helm/values.yaml --version 14.7.15
 ```
 
 ### Deploying with ArgoCD
