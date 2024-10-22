@@ -1,6 +1,8 @@
 {{
     config(
-        materialized='table',
+        materialized='incremental',
+        unique_key='last_updated',
+        incremental_strategy='delete+insert',
         tags=["silver"]
     )
 }}

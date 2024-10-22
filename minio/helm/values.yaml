@@ -61,7 +61,7 @@ statefulset:
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: Parallel
-  replicaCount: 2
+  replicaCount: 3
   zones: 2
   drivesPerNode: 2
 
@@ -116,7 +116,7 @@ resources:
     memory: 256Mi
     cpu: 15m
   limits:
-    memory: 1Gi
+    memory: 2Gi
     cpu: 50m
 
 livenessProbe:
