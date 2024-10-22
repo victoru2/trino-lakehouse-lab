@@ -1,6 +1,8 @@
 {{
     config(
-        materialized='table',
+        materialized='incremental',
+        unique_key='last_updated',
+        incremental_strategy='delete+insert',
         tags=["silver"]
     )
 }}
@@ -10,6 +12,9 @@ WITH
             json_extract(cast(raw_data AS varchar), '$._airbyte_data') AS raw_column
         FROM
             {{ source('iceberg_bronze', 'cardano_bronze') }}
+        {% if is_incremental() %}
+        WHERE from_iso8601_timestamp(json_extract_scalar(json_extract(cast(raw_data AS varchar), '$._airbyte_data'), '$.last_updated')) > (SELECT MAX(last_updated) FROM {{ this }})
+        {% endif %}
     ),
     expanded_data AS (
         SELECT
