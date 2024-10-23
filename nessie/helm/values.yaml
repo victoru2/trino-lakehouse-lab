@@ -59,7 +59,7 @@ resourcesPreset: "medium"
 
 resources:
   requests:
-    memory: 800Mi
+    memory: 300Mi
     cpu: 30m
   limits:
     memory: 1Gi
