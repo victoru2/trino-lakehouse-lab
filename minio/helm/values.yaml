@@ -117,7 +117,7 @@ resources:
     cpu: 15m
   limits:
     memory: 3Gi
-    cpu: 150m
+    cpu: 200m
 
 livenessProbe:
   enabled: true
