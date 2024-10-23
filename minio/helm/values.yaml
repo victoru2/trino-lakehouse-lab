@@ -61,7 +61,7 @@ statefulset:
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: Parallel
-  replicaCount: 3
+  replicaCount: 2
   zones: 2
   drivesPerNode: 2
 
@@ -116,8 +116,8 @@ resources:
     memory: 256Mi
     cpu: 15m
   limits:
-    memory: 2Gi
-    cpu: 50m
+    memory: 3Gi
+    cpu: 150m
 
 livenessProbe:
   enabled: true
@@ -172,7 +172,7 @@ persistence:
   enabled: true
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
-  storageClass: standard
+  storageClass: balanced
   mountPath: /bitnami/minio/data
   accessModes:
   - ReadWriteOnce
