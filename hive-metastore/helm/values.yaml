@@ -12,7 +12,14 @@ image:
   tag: v6
   pullPolicy: IfNotPresent
 
-resources: {}
+resources:
+  requests:
+    memory: 700Mi
+    cpu: 10m
+  limits:
+    memory: 1Gi
+    cpu: 15m
+
 conf:
   hiveSite:
     hive_metastore_uris: thrift://hive-metastore:9083
