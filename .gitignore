@@ -38,3 +38,4 @@ git-repo*
 secrets.yaml
 .vscode
 trino-values.yaml
+.user.yml

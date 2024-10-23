@@ -171,13 +171,13 @@ workers:
     storageClassName:
     fixPermissions: false
 
-  # resources:
-  #   limits:
-  #     cpu: 1000m
-  #     memory: 4Gi
-  #   requests:
-  #     cpu: 50m
-  #     memory: 2Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 2Gi
+    limits:
+      cpu: 1500m
+      memory: 4Gi
 
   terminationGracePeriodSeconds: 600
 
@@ -224,13 +224,13 @@ scheduler:
     create: true
     name: ~
 
-  # resources:
-  #   limits:
-  #     cpu: 1000m
-  #     memory: 512Mi
-  #   requests:
-  #     cpu: 100m
-  #     memory: 256Mi
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
 
   safeToEvict: true
 
@@ -277,7 +277,13 @@ createUserJob:
   useHelmHooks: false
   applyCustomEnv: false
 
-  resources: {}
+  resources:
+    requests:
+      cpu: 200m
+      memory: 100Mi
+    limits:
+      cpu: 600m
+      memory: 300Mi
 
 migrateDatabaseJob:
   enabled: true
@@ -350,13 +356,13 @@ webserver:
       ports:
       - port: "{{ .Values.ports.airflowUI }}"
 
-  # resources:
-  #   limits:
-  #     memory: 2.5Gi
-  #     cpu: 700m
-  #   requests:
-  #     memory: 256Mi
-  #     cpu: 50m
+  resources:
+    requests:
+      cpu: 50m
+      memory: 600Mi
+    limits:
+      cpu: 2500m
+      memory: 6Gi
 
   defaultUser:
     enabled: true
@@ -415,13 +421,13 @@ triggerer:
     storageClassName:
     fixPermissions: false
 
-  # resources:
-  #   limits:
-  #     cpu: 1800m
-  #     memory: 512Mi
-  #   requests:
-  #     cpu: 50m
-  #     memory: 32Mi
+  resources:
+    requests:
+      cpu: 150m
+      memory: 150Mi
+    limits:
+      cpu: 1000m
+      memory: 3Gi
 
   terminationGracePeriodSeconds: 60
 
@@ -451,13 +457,13 @@ statsd:
     name: ~
 
   uid: 65534
-  # resources:
-  #   limits:
-  #     cpu: 100m
-  #     memory: 256Mi
-  #   requests:
-  #     cpu: 50m
-  #     memory: 20Mi
+  resources:
+    requests:
+      cpu: 5m
+      memory: 10Mi
+    limits:
+      cpu: 10m
+      memory: 20Mi
 
   priorityClassName: ~
 
@@ -475,7 +481,13 @@ redis:
     enabled: true
     size: 1Gi
 
-  resources: {}
+  resources:
+    requests:
+      cpu: 2m
+      memory: 4Mi
+    limits:
+      cpu: 4m
+      memory: 8Mi
   passwordSecretName: ~
 
   password: ~
