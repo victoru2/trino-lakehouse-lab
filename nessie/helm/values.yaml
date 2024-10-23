@@ -57,7 +57,13 @@ startupProbe:
 
 resourcesPreset: "medium"
 
-resources: {}
+resources:
+  requests:
+    memory: 800Mi
+    cpu: 30m
+  limits:
+    memory: 1Gi
+    cpu: 50m
 
 podSecurityContext:
   enabled: true
