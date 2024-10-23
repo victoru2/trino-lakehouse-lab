@@ -41,5 +41,5 @@ Use the corresponding credentials
 
 Thanks to [Luan Moreno](https://github.com/luanmorenomaciel) for their contributions. Check out their work at [Luan Moreno | Engenharia de Dados Academy](https://www.youtube.com/@LuanMorenoMMaciel).
 <!-- 
-helm delete orchestrator-airflow
+helm delete airflow -n orchestrator
 -->
