@@ -1,7 +1,7 @@
-# My personal Data engineering Repository
+# My personal Data Lakehouse Repository
 
 [Diagram](https://www.tldraw.com/ro/qudTb-BpITEDcpYnUOXZc?d=v-1885.-829.4706.2292.page)
-![alt text](<shapes at 24-10-21 16.39.39.png>)
+![alt text](lakehouse.png)
 
 ## Directory Structure
 

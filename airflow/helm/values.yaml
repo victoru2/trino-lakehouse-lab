@@ -282,7 +282,7 @@ createUserJob:
       cpu: 200m
       memory: 100Mi
     limits:
-      cpu: 600m
+      cpu: 650m
       memory: 300Mi
 
 migrateDatabaseJob:
@@ -356,13 +356,13 @@ webserver:
       ports:
       - port: "{{ .Values.ports.airflowUI }}"
 
-  resources:
-    requests:
-      cpu: 50m
-      memory: 600Mi
-    limits:
-      cpu: 2500m
-      memory: 6Gi
+  # resources:
+  #   requests:
+  #     cpu: 500m
+  #     memory: 500Mi
+  #   limits:
+  #     cpu: 1000m
+  #     memory: 3Gi
 
   defaultUser:
     enabled: true
@@ -486,7 +486,7 @@ redis:
       cpu: 2m
       memory: 4Mi
     limits:
-      cpu: 4m
+      cpu: 5m
       memory: 8Mi
   passwordSecretName: ~
 
