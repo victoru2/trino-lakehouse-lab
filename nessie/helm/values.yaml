@@ -63,7 +63,6 @@ resources:
     cpu: 30m
   limits:
     memory: 1Gi
-    cpu: 200m
 
 podSecurityContext:
   enabled: true
