@@ -172,7 +172,7 @@ persistence:
   enabled: true
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
-  storageClass: balanced
+  storageClass: premium-rwo
   mountPath: /bitnami/minio/data
   accessModes:
   - ReadWriteOnce
